@@ -43,6 +43,7 @@ DJANGO_APPS = [
 LOCAL_APPS = ["apps.api.users", "apps.api.drawings"]
 
 THIRD_APPS = [
+    "corsheaders",
     "rest_framework",
     "drf_yasg",
 ]
@@ -50,6 +51,7 @@ THIRD_APPS = [
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -133,3 +135,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SWAGGER_SETTINGS = {"DOC_EXPANSION": "none"}
+
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:5555"]
