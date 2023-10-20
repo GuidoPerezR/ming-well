@@ -1,6 +1,38 @@
+import { get, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getUser } from "../../api/users.api";
+import { toast } from "react-hot-toast";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    getValues,
+  } = useForm();
+
+  const onSubmit = handleSubmit(async (data) => {
+    const username = getValues("email");
+    const password = getValues("password");
+    const res = await getUser();
+    res.data.map((user) =>
+      user.username == username && user.password == password
+        ? toast.success("Log In Completed", {
+            position: "buttom-center",
+            style: {
+              background: "#40e0d0",
+              color: "white",
+            },
+          }) && navigate("/drawings")
+        : console.log("No encontrado")
+    );
+    // navigate("/drawings");
+  });
+
   return (
     <section className="h-100 gradient-form" id="login-body">
       <div className="container py-5 h-100">
@@ -19,37 +51,39 @@ function Login() {
                       <h4 className="mt-1 mb-5 pb-1">Ming Well</h4>
                     </div>
 
-                    <form>
+                    <form onSubmit={onSubmit}>
                       <p>Please login to your account</p>
 
                       <div className="form-outline mb-4">
-                        <input
-                          type="email"
-                          id="form2Example11"
-                          className="form-control"
-                          placeholder="Phone number or email address"
-                        />
                         <label className="form-label" htmlFor="form2Example11">
                           Username
                         </label>
+                        <input
+                          type="email"
+                          id="email"
+                          className="form-control"
+                          {...register("email", { required: true })}
+                        />
+                        {errors.email && (
+                          <div class="text-danger">This field is required</div>
+                        )}
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="form2Example22"
-                          className="form-control"
-                        />
                         <label className="form-label" htmlFor="form2Example22">
                           Password
                         </label>
+                        <input
+                          type="password"
+                          id="password"
+                          className="form-control"
+                          {...register("password", { required: true })}
+                        />
+                        {errors.password && <span>This field is required</span>}
                       </div>
 
                       <div className="text-center pt-1 mb-5 pb-1">
-                        <button
-                          className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                          type="button"
-                        >
+                        <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
                           Log in
                         </button>
                       </div>
@@ -60,7 +94,7 @@ function Login() {
                           type="button"
                           className="btn btn-outline-danger"
                         >
-                          <Link to="/sign_up" className="link-danger">
+                          <Link to="/sign_up" className="link-dark">
                             Create new
                           </Link>
                         </button>

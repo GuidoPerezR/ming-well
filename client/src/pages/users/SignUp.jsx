@@ -1,6 +1,8 @@
-import { get, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { createUser } from "../../api/users.api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 function SignUp() {
   const navigate = useNavigate();
 
@@ -15,7 +17,14 @@ function SignUp() {
   const onSubmit = handleSubmit(async (data) => {
     const email = getValues("email");
     data.username = email;
-    createUser(data);
+    await createUser(data);
+    toast.success("User Registration Completed", {
+      position: "top-center",
+      style: {
+        background: "#40e0d0",
+        color: "white",
+      },
+    });
     navigate("/");
   });
 
@@ -31,8 +40,8 @@ function SignUp() {
                 </div>
 
                 <form onSubmit={onSubmit}>
-                  <h5>Información Personal</h5>
-                  <div className="row g-3">
+                  <h5 className="mb-4">Personal Information</h5>
+                  <div className="row g-3 mb-4">
                     <div class="col-md-6">
                       <label for="email" class="form-label">
                         Email
@@ -43,7 +52,9 @@ function SignUp() {
                         id="email"
                         {...register("email", { required: true })}
                       />
-                      {errors.email && <span>Este campo es requerido</span>}
+                      {errors.email && (
+                        <div class="text-danger">This field is required</div>
+                      )}
                     </div>
                     <div class="col-md-6">
                       <label for="password" class="form-label">
@@ -55,14 +66,16 @@ function SignUp() {
                         id="password"
                         {...register("password", { required: true })}
                       />
-                      {errors.password && <span>Este campo es requerido</span>}
+                      {errors.password && (
+                        <div class="text-danger">This field is required</div>
+                      )}
                     </div>
                   </div>
 
-                  <div className="row g-3">
+                  <div className="row g-3 mb-4">
                     <div class="col-md-4">
                       <label for="first_name" class="form-label">
-                        Nombre(s)
+                        First Name
                       </label>
                       <input
                         type="text"
@@ -71,12 +84,12 @@ function SignUp() {
                         {...register("first_name", { required: true })}
                       />
                       {errors.first_name && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                     <div class="col-md-4">
                       <label for="last_name" class="form-label">
-                        Apellido Paterno
+                        Last Name
                       </label>
                       <input
                         type="text"
@@ -84,11 +97,13 @@ function SignUp() {
                         id="last_name"
                         {...register("last_name", { required: true })}
                       />
-                      {errors.last_name && <span>Este campo es requerido</span>}
+                      {errors.last_name && (
+                        <div class="text-danger">This field is required</div>
+                      )}
                     </div>
                     <div class="col-md-4">
                       <label for="second_last_name" class="form-label">
-                        Apellido Materno
+                        Second Last Name
                       </label>
                       <input
                         type="text"
@@ -97,15 +112,15 @@ function SignUp() {
                         {...register("second_last_name", { required: true })}
                       />
                       {errors.second_last_name && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                   </div>
 
-                  <div className="row g-3">
+                  <div className="row g-3 mb-4">
                     <div class="col-md-4">
                       <label for="gender" class="form-label">
-                        Genero
+                        Genre
                       </label>
                       <select
                         name="gender"
@@ -113,15 +128,17 @@ function SignUp() {
                         className="form-select"
                         {...register("gender", { required: true })}
                       >
-                        <option value="">-- Seleccionar</option>
-                        <option value="Hombre">Hombre</option>
-                        <option value="Mujer">Mujer</option>
+                        <option value="">-- Select</option>
+                        <option value="Hombre">Man</option>
+                        <option value="Mujer">Woman</option>
                       </select>
-                      {errors.gender && <span>Este campo es requerido</span>}
+                      {errors.gender && (
+                        <div class="text-danger">This field is required</div>
+                      )}
                     </div>
                     <div class="col-md-4">
                       <label for="dob" class="form-label">
-                        Fecha de Nacimiento
+                        Date of Birth
                       </label>
                       <input
                         type="date"
@@ -129,11 +146,13 @@ function SignUp() {
                         id="dob"
                         {...register("dob", { required: true })}
                       />
-                      {errors.dob && <span>Este campo es requerido</span>}
+                      {errors.dob && (
+                        <div class="text-danger">This field is required</div>
+                      )}
                     </div>
                     <div class="col-md-4">
                       <label for="cell_phone" class="form-label">
-                        Número de teléfono
+                        Cellphone
                       </label>
                       <input
                         type="text"
@@ -142,16 +161,16 @@ function SignUp() {
                         {...register("cell_phone", { required: true })}
                       />
                       {errors.cell_phone && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                   </div>
 
-                  <h5>Información Familiar</h5>
-                  <div className="row g-3">
+                  <h5 className="mb-4">Family Information</h5>
+                  <div className="row g-3 mb-4">
                     <div class="col-md-4">
                       <label for="tutor_name" class="form-label">
-                        Nombre(s)
+                        First Name
                       </label>
                       <input
                         type="text"
@@ -160,12 +179,12 @@ function SignUp() {
                         {...register("tutor_name", { required: true })}
                       />
                       {errors.tutor_name && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                     <div class="col-md-4">
                       <label for="tutor_last_name" class="form-label">
-                        Apellido Paterno
+                        Last Name
                       </label>
                       <input
                         type="text"
@@ -174,12 +193,12 @@ function SignUp() {
                         {...register("tutor_last_name", { required: true })}
                       />
                       {errors.tutor_last_name && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                     <div class="col-md-4">
                       <label for="tutor_second_last_name" class="form-label">
-                        Apellido Materno
+                        Second Last Name
                       </label>
                       <input
                         type="text"
@@ -190,14 +209,14 @@ function SignUp() {
                         })}
                       />
                       {errors.tutor_second_last_name && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                   </div>
-                  <div className="row g-3">
+                  <div className="row g-3 mb-4">
                     <div class="col-md-4">
                       <label for="tutor_gender" class="form-label">
-                        Genero
+                        Genre
                       </label>
                       <select
                         name="tutor_gender"
@@ -205,17 +224,17 @@ function SignUp() {
                         className="form-select"
                         {...register("tutor_gender", { required: true })}
                       >
-                        <option value="">-- Seleccionar</option>
-                        <option value="Hombre">Hombre</option>
-                        <option value="Mujer">Mujer</option>
+                        <option value="">-- Select</option>
+                        <option value="Hombre">Man</option>
+                        <option value="Mujer">Woman</option>
                       </select>
                       {errors.tutor_gender && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                     <div class="col-md-4">
                       <label for="tutor_dob" class="form-label">
-                        Fecha de Nacimiento
+                        Date of Birth
                       </label>
                       <input
                         type="date"
@@ -223,11 +242,13 @@ function SignUp() {
                         id="tutor_dob"
                         {...register("tutor_dob", { required: true })}
                       />
-                      {errors.tutor_dob && <span>Este campo es requerido</span>}
+                      {errors.tutor_dob && (
+                        <div class="text-danger">This field is required</div>
+                      )}
                     </div>
                     <div class="col-md-4">
                       <label for="tutor_cell_phone" class="form-label">
-                        Número de teléfono
+                        Cellphone
                       </label>
                       <input
                         type="text"
@@ -236,14 +257,14 @@ function SignUp() {
                         {...register("tutor_cell_phone", { required: true })}
                       />
                       {errors.tutor_cell_phone && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                   </div>
-                  <div className="row g-3">
-                    <div class="col-md-6">
+                  <div className="row g-3 mb-4">
+                    <div class="col-md-12">
                       <label for="tutor_address" class="form-label">
-                        Dirección
+                        Address
                       </label>
                       <input
                         type="text"
@@ -252,7 +273,7 @@ function SignUp() {
                         {...register("tutor_address", { required: true })}
                       />
                       {errors.tutor_address && (
-                        <span>Este campo es requerido</span>
+                        <div class="text-danger">This field is required</div>
                       )}
                     </div>
                   </div>

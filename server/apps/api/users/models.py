@@ -65,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     dob = DateField("Fecha de nacimiento", null=True)
     image = ImageField(
         "Foto de perfil",
-        upload_to="drawings/users/",
+        upload_to="users/",
         max_length=255,
         null=True,
         blank=True,
