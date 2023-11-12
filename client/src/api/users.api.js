@@ -6,4 +6,4 @@ const url = axios.create({
 
 export const createUser = (user) => url.post('/users/', user)
 
-export const getUser = () => url.get('users/login/')
+export const getUser = () => url.get('users/')

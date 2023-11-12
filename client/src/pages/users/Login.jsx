@@ -1,4 +1,4 @@
-import { get, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../../api/users.api";
@@ -11,7 +11,6 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     getValues,
   } = useForm();
 
@@ -30,7 +29,6 @@ function Login() {
           }) && navigate("/drawings")
         : console.log("No encontrado")
     );
-    // navigate("/drawings");
   });
 
   return (
@@ -59,7 +57,6 @@ function Login() {
                           Username
                         </label>
                         <input
-                          type="email"
                           id="email"
                           className="form-control"
                           {...register("email", { required: true })}
